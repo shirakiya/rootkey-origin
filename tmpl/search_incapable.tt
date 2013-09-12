@@ -1,0 +1,5 @@
+[% WRAPPER 'include/layout.tt' %]
+
+<h1> Warning!!：検索できないワードが含まれています </h1>
+
+[% END %]
