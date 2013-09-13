@@ -1,7 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <!--
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title>[% title || 'Rootkey' %]</title>
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -19,41 +18,34 @@
     <script src="[% uri_for('/static/js/micro_dispatcher.js') %]"></script>
     <link href="[% static_file('/static/css/main.css') %]" rel="stylesheet" type="text/css" media="screen" />
     <script src="[% static_file('/static/js/main.js') %]"></script>
-    --!>
+
     <!--[if lt IE 9]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
     <title>ROOtKEY</title>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0,user-scalable=no"/>
-    <style type="text/css">
-        html{height:100%;}
-        body{height:100%; margin:0; padding:0}
-        #map_canvas{height:100%}
-    </style>
 
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyC6MyJJ0JoQDbBqTunjCiTrXeClAn7uqJM&sensor=false"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyC6MyJJ0JoQDbBqTunjCiTrXeClAn7uqJM&sensor=false"></script>
 
-    <script type="text/javascript">
-        var map;
+    <script>
+        //地図の初期状態の設定
         function initialize(){
             var myhome = new google.maps.LatLng(34.836068,135.530077);
-            console.log(myhome);
             var mapOptions = {
-                    center    : myhome,
-                    zoom      : 12,
-                    mapTypeId : google.maps.MapTypeId.ROADMAP
+                center: myhome,
+                zoom: 12,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
             };
-            map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
-            console.log(map);
+            var map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
+
             //マーカーの設置
             var marker = new google.maps.Marker({
-                position : myhome,
-                map      : map,
-                title    :"Hello World!!"
+                position: myhome,
+                map: map,
+                title:"Hello World!!"
             });
-            console.log(marker);
-/*
             //情報ウィンドウ（吹き出し）の設置
             var contentString =
                 '<div id="content">'+
@@ -70,28 +62,28 @@
                 maxWidth: 500
             });
             google.maps.event.addListener(marker,'click',function(){
-                infowindow.open(map,marker);
-            });
+                    infowindow.open(map,marker);
+                    });
 
             //円の描写
             var circleOptions = {
-                strokeColor   : "#FF0000",
-                strokeOpacity : 0.8,
-                strokeWeight  : 2,
-                fillColor     : "#FF0000",
-                fillOpacity   : 0.35,
-                map           : map,
-                center        : myhome,
-                radius        : 5000,
+                strokeColor: "#FF0000",
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: "#FF0000",
+                fillOpacity: 0.35,
+                map: map,
+                center: myhome,
+                radius: 500,
             };
             new google.maps.Circle(circleOptions);
-    */
-        };
+        }
 
         //読み込んだ後に地図を描写する
         google.maps.event.addDomListener(window,'load',initialize);
 
-    </script>
+
+</script>
 
 </head>
 
@@ -99,8 +91,8 @@
     <div class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/">Rootkey</a>
-                <a class="navbar-brand" href="/">テスト</a>
+                <a class="navbar-brand" href="/">HOME</a>
+                <a class="navbar-brand" href="/">Myページ</a>
                 <div class="nav-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#">Home</a></li>
@@ -112,6 +104,7 @@
             </div><!-- /.navbar-inner -->
         </div><!-- /.container -->
     </div><!-- /.navbar -->
+    <div id="map_canvas" style="width:50%; height:50%"> </div>
     <div class="container">
         <div id="main">
             [% content %]

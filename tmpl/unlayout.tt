@@ -96,6 +96,7 @@
 </head>
 
 <body[% IF bodyID %] id="[% bodyID %]"[% END %] onload="initialize()">
+<div id="map_canvas" style="width:80%; height:80%"></div>
     <div class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
@@ -143,7 +144,6 @@
                     <input type="submit" value="検索">
                 </form>
             </div>
-            <div id="map_canvas" style="width:80%; height:80%"></div>
 
          </div>
          <footer class="footer">

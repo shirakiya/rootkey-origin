@@ -5,7 +5,6 @@ use utf8;
 use Data::Dumper;
 use URI;
 use LWP::UserAgent;
-use Furl;
 use JSON qw( decode_json );
 use Encode qw( encode_utf8 );
 use Math::Trig;
@@ -141,8 +140,8 @@ get '/get' => sub {
         }
     }
     warn Dumper @marker_info;
-    return $c->render('search_incapable.tt');
-    #return $c->redirect('/');
+    return $c->redirect('/');
+
 
     #----------サブルーチン-----------
 
