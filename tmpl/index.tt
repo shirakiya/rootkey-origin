@@ -4,7 +4,7 @@
 
 <hr />
 
-<div style="border:double 5px solid gray; text-align:center">
+<div style="text-align: center;">
     <form method="get" action=[% uri_for('/get') %]>
         <p>出発地：<input type="text" id="origin" name="origin" size="40" maxlength="40"></p>
         <p>to</p>
@@ -28,11 +28,9 @@
         <input type="submit" value="検索">
     </form>
 </div>
-<!--
-<div id="map_canvas" style="width:80%; height:80%"></div>
---!>
-
-
+<div class="row">
+    <div id="map_canvas" style="width:50%; height:50%"> </div>
+</div>
 
 <!--
 <style>
@@ -109,6 +107,6 @@
         <p>And there are module specific docs on <a href="https://metacpan.org/release/Amon2">CPAN</a></p>
     </div>
 </section>
--->
+--!>
 
 [% END %]

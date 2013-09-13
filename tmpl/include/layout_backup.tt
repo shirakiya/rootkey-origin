@@ -5,7 +5,7 @@
     <title>[% title || 'Rootkey' %]</title>
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <meta http-equiv="Content-Script-Type" content="text/javascript" />
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
     <meta name="format-detection" content="telephone=no" />
     <script src="[% uri_for('/static/js/jquery-1.10.0.min.js') %]"></script>
     <link href="[% uri_for('/static/bootstrap/css/bootstrap.css') %]" rel="stylesheet" type="text/css" />
@@ -21,23 +21,11 @@
     <!--[if lt IE 9]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-
-    <style type="text/css">
-        html{height:100}
-        body{height:100; margin:0; padding:0}
-        #map_canvas{height:100}
-    </style>
-
-    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyC6MyJJ0JoQDbBqTunjCiTrXeClAn7uqJM&sensor=false"></script>
-    <script>
-
-    </script>
-
 </head>
 
-<body[% IF bodyID %] id="[% bodyID %]"[% END %]>
+<body[% IF bodyID %] id="[% bodyID %]"[% END %] >
     <div class="navbar navbar-default">
-        <div class="containe">
+        <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand" href="/">Rootkey</a>
                 <a class="navbar-brand" href="/">テスト</a>

@@ -23,11 +23,12 @@
     <!--[if lt IE 9]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
     <title>ROOtKEY</title>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0,user-scalable=no"/>
     <style type="text/css">
-        html{height:100%;}
+        html{height:100%}
         body{height:100%; margin:0; padding:0}
         #map_canvas{height:100%}
     </style>
@@ -35,7 +36,6 @@
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyC6MyJJ0JoQDbBqTunjCiTrXeClAn7uqJM&sensor=false"></script>
 
     <script type="text/javascript">
-        var map;
         function initialize(){
             var myhome = new google.maps.LatLng(34.836068,135.530077);
             console.log(myhome);
@@ -44,7 +44,7 @@
                     zoom      : 12,
                     mapTypeId : google.maps.MapTypeId.ROADMAP
             };
-            map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
+            var map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
             console.log(map);
             //マーカーの設置
             var marker = new google.maps.Marker({
@@ -85,17 +85,17 @@
                 radius        : 5000,
             };
             new google.maps.Circle(circleOptions);
-    */
         };
+*/
 
         //読み込んだ後に地図を描写する
-        google.maps.event.addDomListener(window,'load',initialize);
-
+        //google.maps.event.addDomListener(window,'load',initialize);
+        };
     </script>
 
 </head>
 
-<body[% IF bodyID %] id="[% bodyID %]"[% END %] >
+<body[% IF bodyID %] id="[% bodyID %]"[% END %] onload="initialize()">
     <div class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
@@ -114,11 +114,41 @@
     </div><!-- /.navbar -->
     <div class="container">
         <div id="main">
-            [% content %]
-        </div>
-        <footer class="footer">
+
+            <h1 style="padding: 70px; text-align: center; font-size: 80px; line-height: 1; letter-spacing: -2px;">ROOtKEY</h1>
+
+            <hr />
+
+            <div style="text-align:center">
+                <form method="get" action=[% uri_for('/get') %]>
+                    <p>出発地：<input type="text" id="origin" name="origin" size="40" maxlength="40"></p>
+                    <p>to</p>
+                    <p>目的地：<input type="text" id="destination" name="destination" size="40" maxlength="255"></p>
+                    <p>経由地：<input type="text" id="waypoint" name="waypoint" size="30" maxlength="255"></p>
+                    <p>検索ワード：<input type="text" id="keyword" name="keyword" size="40" maxlength="255"></p>
+                    <p>
+                    <select name="mode">
+                        <option value="driving">車</option>
+                        <option value="bicycling">自転車</option>
+                        <option value="walking">徒歩</option>
+                    </select>
+                    <select name="radius">
+                        <option value="500">500m</option>
+                        <option value="1000">1km</option>
+                        <option value="2000">2km</option>
+                        <option value="5000">5km</option>
+                        <option value="10000">10km</option>
+                    </select>
+                    </p>
+                    <input type="submit" value="検索">
+                </form>
+            </div>
+            <div id="map_canvas" style="width:80%; height:80%"></div>
+
+         </div>
+         <footer class="footer">
             Powered by <a href="http://amon.64p.org/">Amon2</a>
-        </footer>
+         </footer>
     </div>
 </body>
 </html>
