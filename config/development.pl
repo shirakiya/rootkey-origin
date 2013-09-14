@@ -4,9 +4,9 @@ my $basedir = File::Spec->rel2abs(File::Spec->catdir(dirname(__FILE__), '..'));
 my $dbpath = File::Spec->catfile($basedir, 'db', 'development.db');
 +{
     'DBI' => [
-        "dbi:mysql:databese=Rootkeyh",
+        "dbi:mysql:database=Rootkey",
         'root',
-        '',
+        'WFSK7rzM',
         +{ mysql_enable_utf8 => 1 }
     ],
 };

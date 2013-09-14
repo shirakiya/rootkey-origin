@@ -38,9 +38,13 @@ get '/get' => sub {
         keyword     => $c->req->param('keyword'),
     };
 
+    #もし必要な検索条件が無ければ
     #unless (検索項目が入力いない場合){
     #    検索項目が入力されていないという画面もしくはalertを出す。
     #}
+    #
+    #ログインしていればこれらの検索条件をDBへ格納する。
+
 
     my $directions_uri = URI->new('http://maps.googleapis.com/maps/api/directions/json');
     $directions_uri->query_form (
@@ -58,7 +62,7 @@ get '/get' => sub {
 
     my $directions_res_json = $directions_res->content;
     my $directions_res_perl = decode_json( $directions_res_json );
-
+#print Dumper $directions_res_perl;
     my $legs_0     = $directions_res_perl->{routes}->[0]->{legs}->[0];
     my $steps      = $legs_0->{steps};
     my $copyrights = encode_utf8( $directions_res_perl->{routes}->[0]->{copyrights} );
@@ -116,9 +120,7 @@ get '/get' => sub {
             }
         }
     }
-
     push @search_co, { lat => $dep_des->{des_lat}, lng => $dep_des->{des_lng}, };
-    #print Dumper @search_co;
 
     my %key_exist_test;
     my @marker_info;
@@ -130,22 +132,39 @@ get '/get' => sub {
             unless ( exists $key_exist_test{$institution_info->{id}} ) {
                 $key_exist_test{$institution_info->{id}} = 1;
                 my $marker = {
-                    id   => $institution_info->{id},
-                    name => encode_utf8( $institution_info->{name} ),
-                    lat  => $institution_info->{geometry}->{location}->{lat},
-                    lng  => $institution_info->{geometry}->{location}->{lng},
+                    id        => $institution_info->{id},
+                    name      => encode_utf8( $institution_info->{name} ),
+                    lat       => $institution_info->{geometry}->{location}->{lat},
+                    lng       => $institution_info->{geometry}->{location}->{lng},
+                    reference => $institution_info->{reference},
                 };
                 push @marker_info, $marker;
+                #もしログインしているのならばDBヘデータを格納
+                #$c->db->insert( result => +{
+                #        #result_search_id       => searchテーブルのidを持ってくる
+                #        result_institution_id   => $institution_info->{id},
+                #        result_institution_name => encode_utf8( $institution_info->{name} ),
+                #        result_institution_lat  => $institution_info->{geometry}->{location}->{lat},
+                #        result_institution_lng  => $institution_info->{geometry}->{location}->{lng},
+                #        result_reference        => $institution_info->{reference},
+                #});
             }
         }
     }
-    warn Dumper @marker_info;
-    return $c->redirect('/');
+    #warn Dumper @marker_info;
+    #return $c->redirect('/');
+    my $map_display = 1;
+    return $c->render(
+        'index.tt' => {
+            marker_info => \@marker_info,
+            map_display => $map_display,
+        },
+    );
 
 
     #----------サブルーチン-----------
 
-    #座標間距離を求めるサブルーチン
+    #座標間距離を求める
     sub distance {
         my ( $start_lat, $start_lng, $end_lat, $end_lng ) = @_;
 
@@ -160,7 +179,7 @@ get '/get' => sub {
     }
 
 
-    #Placesへのリクエストと検索結果オブジェクト取得サブルーチン
+    #Placesへのリクエストと検索結果オブジェクト取得
     sub places {
         my ( $lat, $lng, $radius, $keyword, $c ) = @_;
 

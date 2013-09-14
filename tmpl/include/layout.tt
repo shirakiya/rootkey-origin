@@ -23,10 +23,6 @@
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <title>ROOtKEY</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1.0,user-scalable=no"/>
-
     <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyC6MyJJ0JoQDbBqTunjCiTrXeClAn7uqJM&sensor=false"></script>
 
     <script>
@@ -74,7 +70,7 @@
                 fillOpacity: 0.35,
                 map: map,
                 center: myhome,
-                radius: 500,
+                radius: 5000,
             };
             new google.maps.Circle(circleOptions);
         }
@@ -104,7 +100,9 @@
             </div><!-- /.navbar-inner -->
         </div><!-- /.container -->
     </div><!-- /.navbar -->
+    [% IF map_display == 1 %]
     <div id="map_canvas" style="width:50%; height:50%"> </div>
+    [% END %]
     <div class="container">
         <div id="main">
             [% content %]
