@@ -37,12 +37,10 @@ get '/get' => sub {
         radius      => $c->req->param('radius'),
         keyword     => $c->req->param('keyword'),
     };
+    if ( $user_input->{origin} eq "" || $user_input->{destination} eq "" || $user_input->{keyword} eq "" ) {
+        return $c->render('no_input.tt');
+    }
 
-    #もし必要な検索条件が無ければ
-    #unless (検索項目が入力いない場合){
-    #    検索項目が入力されていないという画面もしくはalertを出す。
-    #}
-    #
     #ログインしていればこれらの検索条件をDBへ格納する。
 
 
@@ -151,13 +149,12 @@ get '/get' => sub {
             }
         }
     }
-    #warn Dumper @marker_info;
-    #return $c->redirect('/');
-    my $map_display = 1;
+
     return $c->render(
         'index.tt' => {
+            user_input  => $user_input,
             marker_info => \@marker_info,
-            map_display => $map_display,
+            map_display => 1,
         },
     );
 
