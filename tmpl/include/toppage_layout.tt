@@ -31,7 +31,7 @@
             directionsDisplay = new google.maps.DirectionsRenderer();
             var myhome        = new google.maps.LatLng(34.836068,135.530077);
             var mapOptions    = {
-                scrollwheel: false,
+                scrollwheel: true,
                 mapTypeId  : google.maps.MapTypeId.ROADMAP
             };
             var map           = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
@@ -57,8 +57,9 @@
 
             attachMessage(myMarker,contentString);
             [% END %]
-            /*
+
             //円の描写
+            [% FOR search_co IN search_co %]
             var circleOptions = {
                 strokeColor   : "#FF0000",
                 strokeOpacity : 0.8,
@@ -66,11 +67,12 @@
                 fillColor     : "#FF0000",
                 fillOpacity   : 0.35,
                 map           : map,
-                center        : myhome,
-                radius        : 5000,
+                center        : new google.maps.LatLng([% search_co.lat %],[% search_co.lng %]),
+                radius        : [% user_input.radius %],
             };
             new google.maps.Circle(circleOptions);
-            */
+            [% END %]
+
         }
 
         function calcRoute(){

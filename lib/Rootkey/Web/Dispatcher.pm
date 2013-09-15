@@ -60,7 +60,6 @@ get '/get' => sub {
 
     my $directions_res_json = $directions_res->content;
     my $directions_res_perl = decode_json( $directions_res_json );
-#print Dumper $directions_res_perl;
     my $legs_0     = $directions_res_perl->{routes}->[0]->{legs}->[0];
     my $steps      = $legs_0->{steps};
     my $copyrights = encode_utf8( $directions_res_perl->{routes}->[0]->{copyrights} );
@@ -91,6 +90,7 @@ get '/get' => sub {
             if ( $step_d > 2 * $user_input->{radius} ) {
                 print "hoge\n";
                 my $split_step_num = ceil( $step_d / ( 2 * $user_input->{radius} ) );
+                print "$split_step_num\n";
                 my $inc_delta_lat  = ( $step_co->{end_lat} - $step_co->{start_lat} ) / $split_step_num;
                 my $inc_delta_lng  = ( $step_co->{end_lng} - $step_co->{start_lng} ) / $split_step_num;
 
@@ -99,10 +99,10 @@ get '/get' => sub {
                 }
 
                 my $count = 0;
-                while ( $count == $split_step_num ) {
+                while ( $count < $split_step_num ) {
                     $step_co->{start_lat} += $inc_delta_lat;
                     $step_co->{start_lng} += $inc_delta_lng;
-                    push @search_co, { lat => $step_co->{start_lat}, $step_co->{start_lng}, };
+                    push @search_co, { lat => $step_co->{start_lat}, lng => $step_co->{start_lng}, };
                     $count++;
                 }
                 $accumulated_value = 0;
@@ -153,6 +153,7 @@ get '/get' => sub {
     return $c->render(
         'index.tt' => {
             user_input  => $user_input,
+            search_co   => \@search_co,
             marker_info => \@marker_info,
             map_display => 1,
         },
