@@ -1,6 +1,5 @@
 [% WRAPPER 'include/layout.tt' %]
 
 <h1> Warning!!：入力項目が足りません </h1><br>
-<a href="/">TOPへ戻る</a>
 
 [% END %]

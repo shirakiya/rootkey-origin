@@ -110,7 +110,7 @@
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand" href="/">HOME</a>
-                <a class="navbar-brand" href="/">Myページ</a>
+                <a class="navbar-brand" href="/login">ログイン</a>
                 <div class="nav-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#">Home</a></li>
@@ -122,14 +122,16 @@
             </div><!-- /.navbar-inner -->
         </div><!-- /.container -->
     </div><!-- /.navbar -->
+    <h1 style="padding: 70px; text-align: center; font-size: 80px; line-height: 1; letter-spacing: -2px;">ROOtKEY</h1>
     [% IF map_display == 1 %]
-    <div id="map_canvas" style="width:70%; height:80%" > </div>
+    <div id="map_canvas" style="margin-left:auto; margin-right:auto; width:70%; height:80%" > </div>
     [% END %]
     <div class="container">
         <div id="main">
             [% content %]
         </div>
         <footer class="footer">
+            <a href="/help">ヘルプ</a><br>
             Powered by <a href="http://amon.64p.org/">Amon2</a>
         </footer>
     </div>

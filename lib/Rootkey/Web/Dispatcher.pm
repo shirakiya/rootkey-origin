@@ -11,9 +11,8 @@ use Math::Trig;
 use Amon2::Web::Dispatcher::Lite;
 
 any '/' => sub {
-    my ($c) = @_;
-
-    print "@@@@@@@@@@@@@@@@@@\n";
+    my $c = shift;
+    #print Dumper $c;
     return $c->render('index.tt');
 };
 
@@ -23,11 +22,111 @@ any '/' => sub {
 #    return $c->redirect('/');
 #};
 
+any '/help' => sub {
+    my $c = shift;
+    return $c->render('help.tt');
+};
 
+any '/login' => sub {
+    my $c = shift;
+    return $c->render('login.tt');
+};
 
+any '/new' => sub {
+    my $c = shift;
+    return $c->render('new_account.tt')
+};
+
+#----------新規アカウント作成-----------
+post '/new/post' => sub {
+    my $c = shift;
+
+    my $user_input = {
+        account_id => $c->req->param('account_id'),
+        password   => $c->req->param('account_password'),
+        password_2 => $c->req->param('account_password_2'),
+    };
+    #入力項目が不足しているとき
+    if ( $user_input->{account_id} eq "" || $user_input->{password} eq "" || $user_input->{password_2} eq "" ) {
+        return $c->render(
+            'new_account.tt' => {
+                no_input => 1,
+            },
+        );
+    }
+    #パスワードが一致していないとき
+    unless ( $user_input->{password} eq $user_input->{password_2} ) {
+        return $c->render(
+            'new_account.tt' => {
+                password_mismatch => 1,
+            },
+        );
+    }
+    #既にIDが使用されているとき（これでIDは全て異なることになる）
+    my @account_id = $c->db->search_by_sql( q{SELECT account_id FROM account} );       #TODO より良いaccount_idだけ配列で取り出す方法？
+    #print Dumper @account_id;
+    for ( @account_id ) {
+        #print Dumper $_;
+        if ( $_ eq $user_input->{account_id} ) {
+            print "fugafuga\n";
+            return $c->render(
+                'new_account.tt' => {
+                    account_id_used => 1,
+                },
+            );
+        }
+    }
+    #アカウント情報をDBへ記録
+    $c->db->insert( account => {
+            account_id       => $user_input->{account_id},
+            account_password => $user_input->{password},
+    });
+    #そのユーザ固有のセッションを持たせる
+    my $account_info   = $c->db->single( 'account', { account_id => $user_input->{account_id} } );
+    $c->session->set( 'account_info' => $account_info );
+
+    return $c->redirect( '/mypage' );
+    #    'mypage.tt' => {
+    #        account_id     => $account_info->{account_id},
+    #        search_history => \@search_history,
+    #    },
+    #);
+
+};
+
+#--------Myページ------------
+any '/mypage' => sub {
+    my $c = shift;
+
+    my $account_info;
+    if ( $account_info = $c->session->get( 'account_info' ) ) {
+        my @search_history = $c->db->search( 'search', { search_account_id => $account_info->{id} },{ order_by => { 'search_id' => 'DESC' } } );
+
+        return $c->render(
+            'mypage.tt' => {
+                account_id => $account_info->{account_id},
+                search_history => \@search_history,
+            },
+        );
+    }
+    else {
+        return $c->redirect( '/login' );
+    }
+
+};
+
+#---------ログアウト---------
+any '/logout' => sub {
+    my $c = shift;
+
+    $c->session->expire();
+
+    return $c->redirect( '/' );
+};
+
+#---------走査型検索----------
 get '/get' => sub {
-    my ($c) = @_;
-    #warn Dumper $c;
+    my $c = shift;
 
     my $user_input = {
         origin      => $c->req->param('origin'),
@@ -41,7 +140,7 @@ get '/get' => sub {
         return $c->render('no_input.tt');
     }
 
-    #ログインしていればこれらの検索条件をDBへ格納する。
+    #TODO ログインしていればこれらの検索条件をDBへ格納する。
 
 
     my $directions_uri = URI->new('http://maps.googleapis.com/maps/api/directions/json');

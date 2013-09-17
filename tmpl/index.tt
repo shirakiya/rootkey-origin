@@ -1,9 +1,6 @@
 [% WRAPPER 'include/toppage_layout.tt' %]
 
-<h1 style="padding: 70px; text-align: center; font-size: 80px; line-height: 1; letter-spacing: -2px;">ROOtKEY</h1>
-
 <hr />
-
 <div style="text-align: center;">
     <form method="get" action=[% uri_for('/get') %]>
         <p>出発地：<input type="text" id="origin" name="origin" size="40" maxlength="40"></p>

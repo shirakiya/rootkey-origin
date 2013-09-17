@@ -1,0 +1,5 @@
+[% WRAPPER 'include/layout.tt' %]
+
+<h1> ここはヘルプページになる予定です </h1><br>
+
+[% END %]

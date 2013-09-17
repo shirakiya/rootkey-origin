@@ -1,0 +1,34 @@
+[% WRAPPER 'include/layout.tt' %]
+
+<div style="text-align:center;">
+    <h2> 新規アカウント作成</h2><br>
+    [% IF password_mismatch == 1 %]
+   <p><font color="ff0000">パスワードが一致していません！</font></p>
+   [% END %]
+   [% IF no_input == 1 %]
+   <p><font color="ff0000">全ての項目が入力されていません！</font></p>
+   [% END %]
+   [% IF acccount_id_used == 1 %]
+   <p><font color="ff0000">入力されたIDは既に登録されています！</font></p>
+   [% END %]
+    <form method="POST" action=[% uri_for('/new/post') %]>
+        <p><table cellpadding="2" align="center">
+            <tr>
+                <td align="right">ID：</td>
+                <td><input type="text" id="account_id" name="account_id" size="20" maxlength="20"></td>
+            </tr>
+            <tr>
+                <td align="right">パスワード：</td>
+                <td><input type="password" id="account_password" name="account_password" size="20" maxlength="20"></td>
+            </tr>
+            <tr>
+                <td align="right">パスワード（再入力）：</td>
+                <td><input type="password" id="account_password_2" name="account_password_2" size="20" maxlength="20"></td>
+            </tr>
+        </table></p>
+        <p><font color="ff0000">　　　　　　　　　　※パスワードは20字以内の英数字で入力</font></p><br>
+        <p><input type="reset" value="取り消し">　　<input type="submit" value="新規作成"></P><br>
+    </form>
+</div>
+
+[% END %]

@@ -4,6 +4,7 @@ use warnings;
 use utf8;
 use parent qw/Rootkey Amon2::Web/;
 use File::Spec;
+use HTTP::Session::Store::File;
 
 # dispatcher
 use Rootkey::Web::Dispatcher;
@@ -12,6 +13,16 @@ sub dispatch {
 }
 
 # load plugins
+#__PACKAGE__->load_plugins(
+#    'Web::HTTPSession' => {
+#        state => 'Cookie',
+#        store => HTTP::Session::Store::File->new(
+#            dir =>File::Spec->tmpdir(),
+#        )
+#    };
+#);
+
+
 __PACKAGE__->load_plugins(
     'Web::FillInFormLite',
     'Web::CSRFDefender' => {
