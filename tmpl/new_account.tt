@@ -8,7 +8,7 @@
    [% IF no_input == 1 %]
    <p><font color="ff0000">全ての項目が入力されていません！</font></p>
    [% END %]
-   [% IF acccount_id_used == 1 %]
+   [% IF account_id_used == 1 %]
    <p><font color="ff0000">入力されたIDは既に登録されています！</font></p>
    [% END %]
     <form method="POST" action=[% uri_for('/new/post') %]>

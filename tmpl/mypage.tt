@@ -12,9 +12,9 @@
         <table>
             <tr>
                 <td align="right">出発地：</td>
-                <td>[% search_data.search_dep_word %]</td>
+                <td>[% search_data.search_department_word %]</td>
                 <td align="right">目的地：</td>
-                <td>[% search_data.search_des_word %]</td>
+                <td>[% search_data.search_destination_word %]</td>
             </tr>
             <!--
             <tr>
@@ -35,7 +35,7 @@
             </tr>
         </table>　　　　　　⇒<a href="/get">検索履歴を地図でみる</a>
         <br><hr>
-        [% End %]
+        [% END %]
     </div>
 </div>
 

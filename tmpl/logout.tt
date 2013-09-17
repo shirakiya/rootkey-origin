@@ -1,0 +1,8 @@
+[% WRAPPER 'include/layout.tt' %]
+
+<div style="text-align:center;">
+    <h2> ログアウトしました。</h2><br>
+    <p><a href="/">トップページに戻る</a></p>
+</div>
+
+[% END %]

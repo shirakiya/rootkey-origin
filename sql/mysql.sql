@@ -6,8 +6,10 @@ CREATE TABLE IF NOT EXISTS account (
 
 CREATE TABLE IF NOT EXISTS search (
     search_id               INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    search_department_word  VARCHAR(255),
     search_department_lat   FLOAT,
     search_department_lng   FLOAT,
+    search_destination_word VARCHAR(255),
     search_destination_lat  FLOAT,
     search_destination_lng  FLOAT,
     search_keyword          VARCHAR(255),
@@ -21,6 +23,8 @@ CREATE TABLE IF NOT EXISTS search (
 CREATE TABLE IF NOT EXISTS waypoint (
     waypoint_id         INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
     waypoint_search_id  INTEGER,
+    waypoint_account_id INTEGER,
+    waypoint_word       VARCHAR(255),
     waypoint_lat        FLOAT,
     waypoint_lng        FLOAT
 );

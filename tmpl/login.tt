@@ -2,6 +2,15 @@
 
 <div style="text-align:center;">
     <h2> ログイン</h2><br>
+    [% IF no_input_login == 1 %]
+    <p><font color="ff0000">全ての項目が入力されていません！</font></p>
+    [% END %]
+    [% IF password_mismatch == 1 %]
+    <p><font color="ff0000">IDとパスワードの組み合わせが一致しません！</font></p>
+    [% END %]
+    [% IF no_register_account == 1 %]
+    <p><font color="ff0000">そのIDは登録されていません。新規アカウント作成から登録してください</font></p>
+    [% END %]
     <form method="POST" action=[% uri_for('/login/post') %]>
         <p><table cellpadding="2" align="center">
             <tr>

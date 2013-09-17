@@ -29,6 +29,8 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="/">ROOtKEY</a>
                 <a class="navbar-brand" href="/login">ログイン</a>
+                <a class="navbar-brand" href="/logout">ログアウト</a>
+                <a class="navbar-brand" href="/mypage">Myページ</a>
                 <div class="nav-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#">HOME</a></li>

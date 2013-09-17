@@ -8,8 +8,6 @@ use Plack::Builder;
 
 use Rootkey::Web;
 use Rootkey;
-#use Cache::Memcached::Fast;
-use YAML;
 use Plack::Session::Store::File;
 use Plack::Session::State::Cookie;
 use URI::Escape;
@@ -26,26 +24,11 @@ builder {
         root => File::Spec->catdir(dirname(__FILE__), 'static');
     enable 'Plack::Middleware::ReverseProxy';
 
-    #enable 'Plack::Middleware::Session',
-    #    store => Plack::Session::Store::Cache->new(
-    #        cache => Cache::Memcached::Fast->new( +{
-    #            servers   => ["localhost:11211"],
-    #            namespace => 'Rootkey',
-    #        }),
-    #    ),
-    #    state => Plack::Session::State::Cookie->new(
-    #        session_key => 'Rootkey_session',
-    #        httponly    => 1,
-    #        expires     => 604800,
-    #    );
-
     # If you want to run the app on multiple servers,
     # you need to use Plack::Sesion::Store::DBI or ::Store::Cache.
     enable 'Plack::Middleware::Session',
         store => Plack::Session::Store::File->new(
             dir => $session_dir,
-            serializer   => sub { YAML::DumpFile( reverse @_ ) },
-            deserializer => sub { YAML::LoadFile( @_ ) },
         ),
         state => Plack::Session::State::Cookie->new(
             httponly => 1,
