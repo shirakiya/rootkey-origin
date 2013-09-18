@@ -207,7 +207,6 @@ post '/register/post' => sub {
             search_mode             => $user_input->{mode},
             search_account_id       => $session_account->{id},
         });
-    print Dumper $last_insert_id_search;
         for my $one_marker_info ( @$marker_info ) {
             $c->db->insert( 'result' => {
                 result_search_id        => $last_insert_id_search,
@@ -334,7 +333,6 @@ get '/get' => sub {
                 my $step_d = distance( $step_co->{start_lat}, $step_co->{start_lng}, $step_co->{end_lat}, $step_co->{end_lng}, );
 
                 if ( $step_d > 2 * $user_input->{radius} ) {
-                    print "hoge\n";
                     my $split_step_num = ceil( $step_d / ( 2 * $user_input->{radius} ) );
                     my $inc_delta_lat  = ( $step_co->{end_lat} - $step_co->{start_lat} ) / $split_step_num;
                     my $inc_delta_lng  = ( $step_co->{end_lng} - $step_co->{start_lng} ) / $split_step_num;
@@ -353,13 +351,11 @@ get '/get' => sub {
                     $accumulated_value = 0;
                 }
                 elsif ( $accumulated_value + $step->{distance}->{value} > 2 * $user_input->{radius} ) {
-                    print "fugafuga\n";
                     push @search_co, { lat => $step_co->{start_lat}, lng => $step_co->{start_lng}, };
                     $accumulated_value = 0;
                 }
                 else {
                     $accumulated_value += $step->{distance}->{value};
-                    print "hogehogehoge\n";
                 }
             }
         }
