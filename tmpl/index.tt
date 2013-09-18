@@ -3,19 +3,24 @@
 <hr />
 <div style="text-align:center;">
     <form method="get" action=[% uri_for('/get') %]>
-        <p>出発地：<input type="text" id="origin" name="origin" size="40" maxlength="40"></p>
+        <p>出発地：<input type="text" id="origin" name="origin" size="25" maxlength="40"></p>
         <p>to</p>
-        <p>目的地：<input type="text" id="destination" name="destination" size="40" maxlength="255"></p>
-        <p>経由地：<input type="text" id="waypoint" name="waypoint" size="30" maxlength="255"></p>
+        <p>目的地：<input type="text" id="destination" name="destination" size="25" maxlength="255"></p>
+        <!--
+        <p>経由地：<input type="text" id="waypoint" name="waypoint" size="25" maxlength="255"></p>
+        --!>
         <p>検索ワード<br>
-            <input type="text" id="keyword" name="keyword" size="40" maxlength="255">
+            <input type="text" id="keyword" name="keyword" size="20" maxlength="255">
         </p>
+        <!--
         <p>移動手段：
         <select name="mode">
             <option value="driving">車</option>
             <option value="bicycling">自転車</option>
             <option value="walking">徒歩</option>
-        </select>　　検索半径：
+        </select>
+        --!>
+        検索半径：
         <select name="radius">
             <option value="500">500m</option>
             <option value="1000">1km</option>

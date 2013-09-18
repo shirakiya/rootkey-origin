@@ -13,15 +13,36 @@ use Amon2::Web::Dispatcher::Lite;
 #-----------メインページ-------------
 any '/' => sub {
     my $c = shift;
-    #print Dumper $c;
-    return $c->render('index.tt');
+
+    if ( my $session_account = $c->session->get( 'account_info' ) ) {
+        return $c->render(
+            'index.tt' => {
+                account_id => $session_account->{account_id},
+                login      => 1,
+            },
+        );
+    }
+    else {
+        return $c->render('index.tt');
+    }
 };
 
 
 #-----------ヘルプページ--------------
 any '/help' => sub {
     my $c = shift;
-    return $c->render('help.tt');
+
+    if ( my $session_account = $c->session->get( 'account_info' ) ) {
+        return $c->render(
+            'help.tt' => {
+                account_id => $session_account->{account_id},
+                login      => 1,
+            },
+        )
+    }
+    else {
+        return $c->render('help.tt');
+    }
 };
 
 
@@ -147,8 +168,9 @@ any '/mypage' => sub {
 
         return $c->render(
             'mypage.tt' => {
-                account_id => $session_account->{account_id},
+                account_id     => $session_account->{account_id},
                 search_history => \@search_history,
+                login          => 1,
                 #waypointの情報も渡す。
             },
         );
@@ -200,7 +222,11 @@ post '/register/post' => sub {
         $c->session->set( 'user_input'  => '' );
         $c->session->set( 'marker_info' => '' );
 
-        return $c->render( 'register.tt' );
+        return $c->render(
+            'register.tt' => {
+                login => 1,
+            },
+        );
     }
     else {
        return $c->render(
@@ -217,7 +243,8 @@ get '/get' => sub {
     my $c = shift;
 
     if ( my $search_id = $c->req->param('came_from_history') ){
-        #何をDBから引っ張ってこないといけない？
+        my $session_account = $c->session->get( 'account_info' );
+
         my $user_input_itr = $c->db->single( 'search', { search_id => $search_id } );
         my $user_input_db  = $user_input_itr->get_columns;
         my $user_input     = {
@@ -243,9 +270,11 @@ get '/get' => sub {
 
         return $c->render(
             'index.tt' => {
+                account_id  => $session_account->{account_id},
                 user_input  => $user_input,
                 marker_info => \@marker_info,
                 map_display => 1,
+                login       => 1,
             },
         );
     }
@@ -359,15 +388,28 @@ get '/get' => sub {
 
         $c->session->set( 'user_input'  => $user_input );
         $c->session->set( 'marker_info' => \@marker_info );
-
-        return $c->render(
-            'index.tt' => {
-                user_input  => $user_input,
-                search_co   => \@search_co,
-                marker_info => \@marker_info,
-                map_display => 1,
-            },
-        );
+        if ( my $session_account = $c->session->get( 'account_info' ) ) {
+            return $c->render(
+                'index.tt' => {
+                    account_id  => $session_account->{account_id},
+                    user_input  => $user_input,
+                    search_co   => \@search_co,
+                    marker_info => \@marker_info,
+                    map_display => 1,
+                    login       => 1,
+                },
+            );
+        }
+        else {
+            return $c->render(
+                'index.tt' => {
+                    user_input  => $user_input,
+                    search_co   => \@search_co,
+                    marker_info => \@marker_info,
+                    map_display => 1,
+                },
+            );
+        }
     }
 
     #----------サブルーチン-----------

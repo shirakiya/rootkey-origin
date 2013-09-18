@@ -8,7 +8,7 @@
     <hr/>
     <div>
         [% FOR search_data IN search_history %]
-        [% search_data.search_created_at %]　||　[% search_data.search_name %]<br>
+        [% search_data.search_created_at %]　||　<b>[% search_data.search_name %]</b><br>
         <table>
             <tr>
                 <td align="right">出発地：</td>
@@ -29,13 +29,18 @@
             </tr>
             <tr>
                 <td align="right">移動手段：</td>
-                <td><!--もしdrivingなら車などのように変換する--!></td>
+                <td>
+                    [% IF search_data.search_mode == "driving" %]車
+                    [% ELSIF search_data.search_mode == "bicycling" %]自転車
+                    [% ELSE search_data.search_mode == "walking" %]徒歩
+                    [% END %]
+                </td>
                 <td align="right">検索半径：</td>
                 <td>[% search_data.search_radius %]m</td>
             </tr>
         </table>
         <form method="get" action=[% uri_for('/get') %]>
-            <input type="hidden" id="came_from_history" name="came_from_history" value=[% search_data.search_id %]>　　　　　　　　　　　　　　　　　⇒
+            <input type="hidden" id="came_from_history" name="came_from_history" value=[% search_data.search_id %]>⇒
             <input type="submit" value="検索履歴を地図でみる">
         </form>
         <br><hr>

@@ -28,8 +28,11 @@
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand" href="/">ROOtKEY</a>
-                <a class="navbar-brand" href="/login">ログイン</a>
+                [% IF login == 1 %]
                 <a class="navbar-brand" href="/logout">ログアウト</a>
+                [% ELSE %]
+                <a class="navbar-brand" href="/login">ログイン</a>
+                [% END %]
                 <a class="navbar-brand" href="/mypage">Myページ</a>
                 <div class="nav-collapse collapse">
                     <ul class="nav navbar-nav">
