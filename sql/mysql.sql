@@ -7,12 +7,9 @@ CREATE TABLE IF NOT EXISTS account (
 CREATE TABLE IF NOT EXISTS search (
     search_id               INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
     search_department_word  VARCHAR(255),
-    search_department_lat   FLOAT,
-    search_department_lng   FLOAT,
     search_destination_word VARCHAR(255),
-    search_destination_lat  FLOAT,
-    search_destination_lng  FLOAT,
     search_keyword          VARCHAR(255),
+    search_mode             VARCHAR(40),
     search_radius           INTEGER,
     search_name             VARCHAR(255),
     search_created_at       TIMESTAMP,
@@ -36,6 +33,6 @@ CREATE TABLE IF NOT EXISTS result (
     result_institution_lat  FLOAT,
     result_institution_lng  FLOAT,
     result_institution_name VARCHAR(255),
-    result_reference        VARCHAR(255),
+    result_reference        VARCHAR(511),
     result_created_at       TIMESTAMP
 )

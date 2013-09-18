@@ -5,11 +5,8 @@
     [% IF no_input_login == 1 %]
     <p><font color="ff0000">全ての項目が入力されていません！</font></p>
     [% END %]
-    [% IF password_mismatch == 1 %]
+    [% IF password_mismatch == 1 || no_register_account == 1 %]
     <p><font color="ff0000">IDとパスワードの組み合わせが一致しません！</font></p>
-    [% END %]
-    [% IF no_register_account == 1 %]
-    <p><font color="ff0000">そのIDは登録されていません。新規アカウント作成から登録してください</font></p>
     [% END %]
     <form method="POST" action=[% uri_for('/login/post') %]>
         <p><table cellpadding="2" align="center">
@@ -22,6 +19,9 @@
                 <td><input type="password" id="account_password" name="account_password" size="20" maxlength="20"></td>
             </tr>
         </table></p><br>
+        [% IF came_from_register == 1 %]
+        <input type="hidden" id="came_from_register" name="came_from_register" value="1">
+        [% END %]
         <p><input type="reset" value="取り消し">　　<input type="submit" value="ログイン"></P><br>
         <p><a href="/new">新しくアカウントを作成</a></p>
     </form>

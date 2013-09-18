@@ -1,7 +1,7 @@
 [% WRAPPER 'include/toppage_layout.tt' %]
 
 <hr />
-<div style="text-align: center;">
+<div style="text-align:center;">
     <form method="get" action=[% uri_for('/get') %]>
         <p>出発地：<input type="text" id="origin" name="origin" size="40" maxlength="40"></p>
         <p>to</p>
@@ -26,4 +26,15 @@
         </p>
         <input type="submit" value="検索">
     </form>
+</div>
+[% IF map_display == 1 %]
+<br><br>
+<div style="text-align:center;">
+    <h3>検索結果の登録はこちらから↓↓</h3>
+        <form method="post" action=[% uri_for('/register/post') %]>
+        <p>登録名：<input type="text" id="search_name" name="search_name" size="40" maxlength="255"></p>
+        <p><input type="submit" value="登録"></p>
+    </form>
+</div>
+[% END %]
 [% END %]

@@ -1,0 +1,9 @@
+[% WRAPPER 'include/layout.tt' %]
+
+<div style="text-align:center;">
+    <h2> 検索結果を履歴に登録しました！</h2><br>
+    <p><a href="/">トップページ</a></p>
+    <p><a href="/mypage">Myページ</a></p>
+</div>
+
+[% END %]

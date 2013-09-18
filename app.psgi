@@ -49,6 +49,7 @@ builder {
         ),
         state => Plack::Session::State::Cookie->new(
             httponly => 1,
+            expires  => 3600,
         );
     Rootkey::Web->to_app();
 };

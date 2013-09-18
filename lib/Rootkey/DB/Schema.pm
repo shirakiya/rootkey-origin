@@ -22,11 +22,10 @@ table {
     pk 'search_id';
     columns qw(
         search_id
-        search_department_lat
-        search_department_lng
-        search_destination_lat
-        search_destination_lng
+        search_department_word
+        search_destination_word
         search_keyword
+        search_mode
         search_radius
         search_name
         search_created_at
@@ -41,6 +40,8 @@ table {
     columns qw(
         waypoint_id
         waypoint_search_id
+        waypoint_account_id
+        waypoint_word_id
         waypoint_lat
         waypoint_lng
     );
