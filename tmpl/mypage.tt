@@ -1,50 +1,54 @@
 [% WRAPPER 'include/layout.tt' %]
 
-<div style="text-align:right;">
-    ようこそ、[% account_id %]さん
-</div>
 <div>
     <p><h2>検索履歴一覧</h2></p>
-    <hr/>
     <div>
-        [% FOR search_data IN search_history %]
-        [% search_data.search_created_at %]　||　<b>[% search_data.search_name %]</b><br>
-        <table>
-            <tr>
-                <td align="right">出発地：</td>
-                <td>[% search_data.search_department_word %]</td>
-                <td align="right">目的地：</td>
-                <td>[% search_data.search_destination_word %]</td>
-            </tr>
-            <!--
-            <tr>
-                <td align="right">経由地：</td>
-                <td>[%  %]</td>
-                <td></td>
-            </tr>
-            --!>
-            <tr>
-                <td align="right">検索ワード：</td>
-                <td>[% search_data.search_keyword %]</td>
-            </tr>
-            <tr>
-                <td align="right">移動手段：</td>
-                <td>
-                    [% IF search_data.search_mode == "driving" %]車
-                    [% ELSIF search_data.search_mode == "bicycling" %]自転車
-                    [% ELSE search_data.search_mode == "walking" %]徒歩
-                    [% END %]
-                </td>
-                <td align="right">検索半径：</td>
-                <td>[% search_data.search_radius %]m</td>
-            </tr>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>登録時間</th>
+                    <th>登録名</th>
+                    <th>出発地→目的地</th>
+                    <!--<th>経由地</th>--!>
+                    <th>検索ワード</th>
+                    <th>移動手段</th>
+                    <th>検索半径</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            [% FOR search_data IN search_history %]
+                <tr>
+                    <td>[% search_data.search_created_at %]</td>
+                    <td>[% search_data.search_name %]</td>
+                    <td>[% search_data.search_department_word %]→[% search_data.search_destination_word %]</td>
+                    <td>[% search_data.search_keyword %]</td>
+                    <td>
+                        [% SWITCH search_data.search_mode %]
+                        [% CASE "driving" %]車
+                        [% CASE "bicycling" %]自転車
+                        [% CASE "walking" %]徒歩
+                        [% END %]
+                    </td>
+                    <td>
+                        [% SWITCH search_data.search_radius %]
+                        [% CASE "500" %]500m
+                        [% CASE "1000" %]1km
+                        [% CASE "2000" %]2km
+                        [% CASE "5000" %]5km
+                        [% CASE "10000" %]10km
+                        [% END %]
+                    </td>
+                    <td>
+                        <form method="get" action=[% uri_for('/get') %]>
+                            <input type="hidden" id="came_from_history" name="came_from_history" value=[% search_data.search_id %]>
+                            <input type="submit" value="地図で見る">
+                        </form>
+                    </td>
+                </tr>
+            [% END %]
+            </tbody>
         </table>
-        <form method="get" action=[% uri_for('/get') %]>
-            <input type="hidden" id="came_from_history" name="came_from_history" value=[% search_data.search_id %]>⇒
-            <input type="submit" value="検索履歴を地図でみる">
-        </form>
-        <br><hr>
-        [% END %]
     </div>
 </div>
 

@@ -9,6 +9,7 @@
     <meta name="format-detection" content="telephone=no" />
     <script src="[% uri_for('/static/js/jquery-1.10.0.min.js') %]"></script>
     <link href="[% uri_for('/static/bootstrap/css/bootstrap.css') %]" rel="stylesheet" type="text/css" />
+    <link href="[% uri_for('/static/bootstrap/css/signin.css') %]" rel="stylesheet">
     <script src="[% uri_for('/static/bootstrap/js/bootstrap.js') %]"></script>
     <script src="[% uri_for('/static/js/es5-shim.min.js') %]"></script>
     <script src="[% uri_for('/static/js/micro_template.js') %]"></script>
@@ -106,36 +107,45 @@
 </head>
 
 <body[% IF bodyID %] id="[% bodyID %]"[% END %]>
-    <div class="navbar navbar-default">
+    <div class="navbar navbar-default navbar-static-top">
         <div class="container">
             <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
                 <a class="navbar-brand" href="/">ROOtKEY</a>
-                [% IF login == 1 %]
-                <a class="navbar-brand" href="/logout">ログアウト</a>
-                [% ELSE %]
-                <a class="navbar-brand" href="/login">ログイン</a>
-                [% END %]
-                <a class="navbar-brand" href="/mypage">Myページ</a>
                 <div class="nav-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#">Link</a></li>
-                        <li><a href="#">Link</a></li>
-                        <li><a href="#">Link</a></li>
+                    <ul class="nav navbar-nav navbar-right">
+                        [% IF login == 1 %]
+                        <li><a href="logout">ログアウト</a></li>
+                        [% ELSE %]
+                        <li><a href="/login">ログイン</a></li>
+                        [% END %]
+                        <li><a href="/mypage">Myページ</a></li>
                     </ul>
                 </div>
+                [% IF login == 1 %]
+                <div class="navbar-brand" style="float:right; font-size:small; color:#ffa500">
+                    ようこそ、[% account_id %]さん
+                </div>
+                [% END %]
             </div><!-- /.navbar-inner -->
         </div><!-- /.container -->
     </div><!-- /.navbar -->
-    [% IF login == 1 %]
-    <div style="text-align:right;">
-        ようこそ、[% account_id %]さん
+
+[% UNLESS map_display == 1 %]
+    <div class="jumbotron">
+        <h1>ROOtKEY</h1>
+        <p>For Your Happiness Through Your Own Way.</p>
+        <p>あなたのルートにある探し物に出会えるアプリケーション</p>
     </div>
-    [% END %]
-    <h2 style="padding:50px 10px; text-align:center; font-size:80px; line-height:1; letter-spacing:-2px;">ROOtKEY</h2>
+[% END %]
     [% IF map_display == 1 %]
     <div id="map_canvas" style="margin-left:auto; margin-right:auto; width:70%; height:80%" > </div>
     [% END %]
+
     <div class="container">
         <div id="main">
             [% content %]

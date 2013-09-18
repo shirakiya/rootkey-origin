@@ -1,30 +1,16 @@
 [% WRAPPER 'include/layout.tt' %]
 
-<div style="text-align:center;">
-    <h2> ログイン</h2><br>
+<form class="form-signin" method="POST" action=[% uri_for('/login/post') %]>
+    <h2 class="form-signin-heading">ログイン項目入力</h2>
     [% IF no_input_login == 1 %]
     <p><font color="ff0000">全ての項目が入力されていません！</font></p>
     [% END %]
     [% IF password_mismatch == 1 || no_register_account == 1 %]
     <p><font color="ff0000">IDとパスワードの組み合わせが一致しません！</font></p>
     [% END %]
-    <form method="POST" action=[% uri_for('/login/post') %]>
-        <p><table cellpadding="2" align="center">
-            <tr>
-                <td align="right">ID：</td>
-                <td><input type="text" id="account_id" name="account_id" size="20" maxlength="20"></td>
-            </tr>
-            <tr>
-                <td align="right">パスワード：</td>
-                <td><input type="password" id="account_password" name="account_password" size="20" maxlength="20"></td>
-            </tr>
-        </table></p><br>
-        [% IF came_from_register == 1 %]
-        <input type="hidden" id="came_from_register" name="came_from_register" value="1">
-        [% END %]
-        <p><input type="reset" value="取り消し">　　<input type="submit" value="ログイン"></P><br>
-        <p><a href="/new">新しくアカウントを作成</a></p>
-    </form>
-</div>
+    <input type="text" class="form-control" placeholder="ログインID" autofocus id="account_id" name="account_id" size="20" maxlength="20">
+    <input type="password" class="form-control" placeholder="パスワード" id="account_password" name="account_password" size="20" maxlength="20"><br>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">ログイン</button>
+</form>
 
 [% END %]

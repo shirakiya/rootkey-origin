@@ -319,7 +319,7 @@ get '/get' => sub {
 
         my @search_co;
         push @search_co, { lat => $dep_des->{dep_lat}, lng => $dep_des->{dep_lng} };
-        if ( $dep_des->{sum_distance} > 2 * $user_input->{radius} ) {
+        if ( ( $dep_des->{sum_distance} )  > ( 2 * $user_input->{radius} ) ) {
             my $accumulated_value = 0;
             my $step_co;
 
@@ -332,7 +332,7 @@ get '/get' => sub {
                 };
                 my $step_d = distance( $step_co->{start_lat}, $step_co->{start_lng}, $step_co->{end_lat}, $step_co->{end_lng}, );
 
-                if ( $step_d > 2 * $user_input->{radius} ) {
+                if ( $step_d > ( 2 * $user_input->{radius} ) ) {
                     my $split_step_num = ceil( $step_d / ( 2 * $user_input->{radius} ) );
                     my $inc_delta_lat  = ( $step_co->{end_lat} - $step_co->{start_lat} ) / $split_step_num;
                     my $inc_delta_lng  = ( $step_co->{end_lng} - $step_co->{start_lng} ) / $split_step_num;
@@ -350,7 +350,7 @@ get '/get' => sub {
                     }
                     $accumulated_value = 0;
                 }
-                elsif ( $accumulated_value + $step->{distance}->{value} > 2 * $user_input->{radius} ) {
+                elsif ( ( $accumulated_value + $step->{distance}->{value} ) > ( 2 * $user_input->{radius} ) ) {
                     push @search_co, { lat => $step_co->{start_lat}, lng => $step_co->{start_lng}, };
                     $accumulated_value = 0;
                 }
