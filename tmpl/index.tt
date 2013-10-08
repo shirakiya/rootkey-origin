@@ -5,13 +5,13 @@
         <h2 class="form-signin-heading">ROOtKEY検索</h2>
 
         <input type="text" class="form-control" placeholder="出発地" autofocus id="origin" name="origin" size="25" maxlength="40">
-        <input type="text" class="form-control" placeholder="目的地" autofocus id="destination" name="destination" size="25" maxlength="255">
+        <input type="text" class="form-control" placeholder="目的地" id="destination" name="destination" size="25" maxlength="255">
         <!--
         via
         <input type="text" class="form-control" placeholder="経由地" autofocus id="waypoint" name="waypoint" size="25" maxlength="255"></p>
         --!>
         <p>
-        <input type="text" class="form-control" placeholder="検索ワード" autofocus id="keyword" name="keyword" size="20" maxlength="255">
+        <input type="text" class="form-control" placeholder="検索ワード" id="keyword" name="keyword" size="20" maxlength="255">
         </p>
         <input type="hidden" id="waypoint" name="waypoint" value="">
         <input type="hidden" id="mode" name="mode" value="driving">

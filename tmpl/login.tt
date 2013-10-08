@@ -1,5 +1,8 @@
 [% WRAPPER 'include/layout.tt' %]
 
+<div class="row">
+    <div class="col-lg-8 col-lg-offset-2">
+    <div class="col-lg-6">
 <form class="form-signin" method="POST" action=[% uri_for('/login/post') %]>
     <h2 class="form-signin-heading">ログイン項目入力</h2>
     [% IF no_input_login == 1 %]
@@ -12,5 +15,12 @@
     <input type="password" class="form-control" placeholder="パスワード" id="account_password" name="account_password" size="20" maxlength="20"><br>
     <button class="btn btn-lg btn-primary btn-block" type="submit">ログイン</button>
 </form>
-
+    </div>
+    <div class="col-lg-6">
+        <br><br>
+        <h4><p>初めて登録される方はこちら</p></h4>
+        <p><a class="btn btn-danger btn-lg" href="/new">新規アカウント作成 &raquo;</a></p>
+    </div>
+</div>
+</div>
 [% END %]
