@@ -101,7 +101,6 @@
         //読み込んだ後に地図を描写する
         google.maps.event.addDomListener(window,'load',initialize);
         google.maps.event.addDomListener(window,'load',calcRoute);
-
 </script>
 
 </head>
